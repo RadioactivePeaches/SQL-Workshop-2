@@ -1,10 +1,15 @@
 * = Difficulty level
 1. Show last name and the number of students in the family BUT show only the family with two or more students.
-SELECT LastName, SELECT(LastName >=2)
+SELECT *
 FROM Student
-WHERE #Students >=2;
+GROUP BY "LastName"
+HAVING COUNT >= 2;
 
 2. Show state and the number of students only for the states that have more than 10 students.
+SELECT State, COUNT(*) State
+FROM Student
+HAVING COUNT > 10;
+
 3. Show only the unique student names (the names that are not like any others).
 4. *Show the state(s) where the student with the lowest GPA comes from.
 5. *Show the state(s) where the student with the highest GPA comes from.
