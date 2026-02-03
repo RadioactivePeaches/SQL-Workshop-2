@@ -11,10 +11,27 @@ FROM Student
 HAVING COUNT > 10;
 
 3. Show only the unique student names (the names that are not like any others).
+SELECT DISTINCT FirstName, LastName
+FROM Student;
+
 4. *Show the state(s) where the student with the lowest GPA comes from.
+SELECT State
+FROM Student
+WHERE GPA = (SELECT MIN(GPA) FROM Student);
+
 5. *Show the state(s) where the student with the highest GPA comes from.
+SELECT State
+FROM Student
+WHERE GPA = (SELECT MAX(GPA) FROM Student);
+
 6. Show student ID, course ID, course name, semester, and grade.
+SELECT SID, CID, CName, Semester, Grade
+FROM Student;
+
 7. Show student ID, first name, last name, course ID, course name, semester, and grade.
+SELECT SID, FirstName, LastName, CID, CName, Semester, Grade
+FROM Student;
+
 8. Show course ID and course name that someone has ever taken.
 9. Show course ID and course name that no one has ever taken.
 10. Show student ID, first name, and last name of those who have never taken a course.
