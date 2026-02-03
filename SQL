@@ -1,0 +1,20 @@
+* = Difficulty level
+1. Show last name and the number of students in the family BUT show only the family with two or more students.
+SELECT LastName, SELECT(LastName >=2)
+FROM Student
+WHERE #Students >=2;
+
+2. Show state and the number of students only for the states that have more than 10 students.
+3. Show only the unique student names (the names that are not like any others).
+4. *Show the state(s) where the student with the lowest GPA comes from.
+5. *Show the state(s) where the student with the highest GPA comes from.
+6. Show student ID, course ID, course name, semester, and grade.
+7. Show student ID, first name, last name, course ID, course name, semester, and grade.
+8. Show course ID and course name that someone has ever taken.
+9. Show course ID and course name that no one has ever taken.
+10. Show student ID, first name, and last name of those who have never taken a course.
+11. Show student ID, first name, and last name of those who took MIS2111 in 1/2015.
+12. **Show student ID, first name, last name, mentor ID, and mentor first name.
+13. **Show student ID, first name, last name, mentor ID, and mentor first name for the students who have mentor.
+14. **Show student ID, first name, and last name of the students who are mentors.
+15. ***Show first name and last name of those who mentor more than one student.
