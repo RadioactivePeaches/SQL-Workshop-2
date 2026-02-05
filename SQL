@@ -38,8 +38,22 @@ FROM Student
 WHERE StudentName = "someone";
 
 9. Show course ID and course name that no one has ever taken.
+SELECT CourseID, CourseName
+FROM Student
+HAVING COUNT(Students) = 0;
+
 10. Show student ID, first name, and last name of those who have never taken a course.
+SELECT StudentID, FirstName, LastName
+FROM Student
+WHERE Grade IS NULL;
+
 11. Show student ID, first name, and last name of those who took MIS2111 in 1/2015.
+SELECT s.SID, s.FirstName, s.LastName
+FROM Student s
+JOIN Register r ON s.SID = r.SID
+WHERE r.CID = 'MIS2111' 
+AND r.Semester = 1/2015
+
 12. **Show student ID, first name, last name, mentor ID, and mentor first name.
 13. **Show student ID, first name, last name, mentor ID, and mentor first name for the students who have mentor.
 14. **Show student ID, first name, and last name of the students who are mentors.
