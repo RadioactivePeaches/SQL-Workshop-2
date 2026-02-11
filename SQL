@@ -1,60 +1,85 @@
 * = Difficulty level
 1. Show last name and the number of students in the family BUT show only the family with two or more students.
-SELECT *
+SELECT LastName, COUNT(*) AS NumStudents
 FROM Student
-GROUP BY "LastName"
-HAVING COUNT >= 2;
+GROUP BY LastName
+HAVING COUNT(*) >= 2;
 
 2. Show state and the number of students only for the states that have more than 10 students.
-SELECT State, COUNT(*) State
+SELECT State, COUNT(*) AS NumStudents
 FROM Student
-HAVING COUNT > 10;
+GROUP BY State
+HAVING COUNT(*) > 10;
 
 3. Show only the unique student names (the names that are not like any others).
-SELECT DISTINCT FirstName, LastName
-FROM Student;
+SELECT FirstName, LastName
+FROM Student
+GROUP BY FirstName, LastName
+HAVING COUNT(*) = 1;
 
 4. *Show the state(s) where the student with the lowest GPA comes from.
-SELECT State
+SELECT DISTINCT State
 FROM Student
 WHERE GPA = (SELECT MIN(GPA) FROM Student);
 
 5. *Show the state(s) where the student with the highest GPA comes from.
-SELECT State
+SELECT DISTINCT State
 FROM Student
 WHERE GPA = (SELECT MAX(GPA) FROM Student);
 
 6. Show student ID, course ID, course name, semester, and grade.
-SELECT SID, CID, CName, Semester, Grade
-FROM Student;
+SELECT r.SID, r.CID, c.CName, r.Semester, r.Grade
+FROM Register r
+JOIN Course c ON r.CID = c.CID;
 
 7. Show student ID, first name, last name, course ID, course name, semester, and grade.
-SELECT SID, FirstName, LastName, CID, CName, Semester, Grade
-FROM Student;
+SELECT s.SID, s.FirstName, s.LastName, r.CID, c.CName, r.Semester, r.Grade
+FROM Student s
+JOIN Register r ON s.SID = r.SID
+JOIN Course c ON r.CID = c.CID;
 
 8. Show course ID and course name that someone has ever taken.
-SELECT FirstName, LastName, CourseID, CourseName
-FROM Student
-WHERE StudentName = "someone";
+SELECT DISTINCT c.CID, c.CName
+FROM Register r
+JOIN Course c ON r.CID = c.CID;
 
 9. Show course ID and course name that no one has ever taken.
-SELECT CourseID, CourseName
-FROM Student
-HAVING COUNT(Students) = 0;
+SELECT c.CID, c.CName
+FROM Course c
+LEFT JOIN Register r ON c.CID = r.CID
+WHERE r.CID IS NULL;
 
 10. Show student ID, first name, and last name of those who have never taken a course.
-SELECT StudentID, FirstName, LastName
-FROM Student
-WHERE Grade IS NULL;
+SELECT s.SID, s.FirstName, s.LastName
+FROM Student s
+LEFT JOIN Register r ON s.SID = r.SID
+WHERE r.SID IS NULL;
 
 11. Show student ID, first name, and last name of those who took MIS2111 in 1/2015.
 SELECT s.SID, s.FirstName, s.LastName
 FROM Student s
 JOIN Register r ON s.SID = r.SID
-WHERE r.CID = 'MIS2111' 
-AND r.Semester = 1/2015
+WHERE r.CID = 'MIS2111'
+AND r.Semester = '1/2015';
 
 12. **Show student ID, first name, last name, mentor ID, and mentor first name.
+SELECT s.SID, s.FirstName, s.LastName, s.MentorID, m.FirstName AS MentorFirstName
+FROM Student s
+LEFT JOIN Student m ON s.MentorID = m.SID;
+
 13. **Show student ID, first name, last name, mentor ID, and mentor first name for the students who have mentor.
+SELECT s.SID, s.FirstName, s.LastName, s.MentorID, m.FirstName AS MentorFirstName
+FROM Student s
+JOIN Student m ON s.MentorID = m.SID;
+
 14. **Show student ID, first name, and last name of the students who are mentors.
+SELECT DISTINCT m.SID, m.FirstName, m.LastName
+FROM Student s
+JOIN Student m ON s.MentorID = m.SID;
+
 15. ***Show first name and last name of those who mentor more than one student.
+SELECT m.FirstName, m.LastName
+FROM Student s
+JOIN Student m ON s.MentorID = m.SID
+GROUP BY m.SID, m.FirstName, m.LastName
+HAVING COUNT(*) > 1;
